@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reviews Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body>
+  <section class="header-2">
+    <nav>
+      <a href="index.html"><img src="images/logo1.svg" alt="Logo" /></a>
+      <div class="nav-link" id="navLink">
+        <i class="fa fa-window-close" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="product.html">Shop</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li class="rating-icon">
+            <a href="reviews.html" aria-label="Reviews">
+               <i class="fa fa-heart-o" aria-hidden="true"></i>
+              <span id="ratingCount" class="badge" style="display:none;">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+     
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+  </section>
+
+  <div class="small-container reviews-top-margin">
+    <div class="reviews-header">
+      <h2>Reviews Dashboard</h2>
+      <div class="reviews-stats">
+        <div class="stat-card">
+          <h4>Total Reviews</h4>
+          <div class="value" id="statTotal">0</div>
+        </div>
+        <div class="stat-card">
+          <h4>Average Rating</h4>
+          <div class="value"><span id="statAvg">0.0</span> <span class="stars" id="statAvgStars"></span></div>
+        </div>
+        <div class="stat-card">
+          <h4>Last Updated</h4>
+          <div class="value" id="statLast">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <input type="text" id="filterText" placeholder="Search by product or comment..." />
+      <select id="filterRating">
+        <option value="">All ratings</option>
+        <option value="5">5 stars</option>
+        <option value="4">4 stars</option>
+        <option value="3">3 stars</option>
+        <option value="2">2 stars</option>
+        <option value="1">1 star</option>
+      </select>
+      <input type="date" id="filterFrom" />
+      <input type="date" id="filterTo" />
+      <button class="button" id="applyFilters">Apply</button>
+      <button class="button secondary" id="resetFilters">Reset</button>
+    </div>
+
+    <div class="reviews-actions">
+      <span class="chip"><i class="fa fa-info-circle"></i> Data is stored locally in your browser</span>
+      <button class="button" id="exportCsv"><i class="fa fa-download"></i> Export CSV</button>
+      <button class="button danger" id="clearAll"><i class="fa fa-trash"></i> Clear All</button>
+    </div>
+
+    <div id="reviews-container">
+      <table class="reviews-table">
+        <thead>
+          <tr>
+            <th style="width: 140px;">Date</th>
+            <th>Product</th>
+            <th style="width: 140px;">Rating</th>
+            <th style="width: 180px;">User</th>
+            <th>Comment</th>
+            <th style="width: 80px; text-align:center;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="reviewsTbody"></tbody>
+      </table>
+      <div id="noReviews" class="no-reviews" style="display:none;">No reviews yet.</div>
+    </div>
+
+    <div class="add-review">
+      <h3>Add a Review (for testing)</h3>
+      <div class="row" style="padding-top:0;">
+        <input type="text" id="newProduct" placeholder="Product name" style="flex:2 1 220px;" />
+        <select id="newRating" style="flex:1 1 120px;">
+          <option value="">Rating</option>
+          <option value="5">5</option>
+          <option value="4">4</option>
+          <option value="3">3</option>
+          <option value="2">2</option>
+          <option value="1">1</option>
+        </select>
+        <input type="text" id="newUser" placeholder="User (email or name)" style="flex:1 1 220px;" />
+      </div>
+      <textarea id="newComment" placeholder="Write a comment..."></textarea>
+      <button class="button" id="addReviewBtn">Add Review</button>
+    </div>
+  </div>
+
+  <div class="footer" style="margin-top:30px;">
+    <div class="container">
+      <div class="row">
+        <div class="footer-col-1">
+          <img src="images/logo1.svg" alt="Logo">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing <br /> nobis dolorem et temporibus, ipsam dolor.</p>
+        </div>
+        <div class="footer-col-2">
+          <h3>Useful Links</h3>
+          <ul>
+            <li>Coupons</li>
+            <li>Blog Posts</li>
+            <li>Return Policy</li>
+            <li>Join Affiliate</li>
+          </ul>
+        </div>
+        <div class="footer-col-3">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="https://www.instagram.com/an1magnet?utm_source=qr&igsh=YWFrYTh4bDlmb2Mz">Instagram</a></li>
+            <li>X/Twitter</li>
+            <li>Facebook</li>
+            <li>Whatsapp</li>
+          </ul>
+        </div>
+        <div class="footer-col-4">
+          <h3>Payment Mode</h3>
+          <ul>
+            <li>Credit Cards</li>
+            <li>Digital wallet</li>
+            <li>Cryptocurrency</li>
+            ​<li>Paypal</li>
+          </ul>
+        </div>
+      </div>
+      <hr />
+      <p class="copyright">copyright2025 - Animagnetweb test</p>
+    </div>
+  </div>
+
+  <script src="products.js"></script>
+  <script>
+    function showMenu(){ document.getElementById('navLink').style.right = '0'; }
+    function hideMenu(){ document.getElementById('navLink').style.right = '-200px'; }
+
+    function escapeHtml(s){
+      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function fmtDate(ts){
+      try { return new Date(ts).toLocaleString(); } catch(e) { return ''; }
+    }
+    function starsHTML(n){
+      n = Math.max(0, Math.min(5, Number(n)||0));
+      let html = '';
+      for(let i=1;i<=5;i++){
+        html += '<i class="fa ' + (i<=n?'fa-star':'fa-star-o') + '"></i>';
+      }
+      return '<span class="stars">' + html + '</span>';
+    }
+    function getProductsByName(){
+      const map = new Map();
+      try {
+        if (typeof products !== 'undefined' && Array.isArray(products)) {
+          products.forEach(p=> map.set(p.name, p));
+        }
+        const stored = JSON.parse(sessionStorage.getItem('allProducts')||'[]');
+        if (Array.isArray(stored)) stored.forEach(p=> map.set(p.name, p));
+      } catch(e) {}
+      return map;
+    }
+
+    function loadReviews(){
+      try { return JSON.parse(localStorage.getItem('reviews')||'[]'); } catch(e){ return []; }
+    }
+    function saveReviews(list){ localStorage.setItem('reviews', JSON.stringify(list)); }
+
+    function updateRatingBadge(count){
+      var badge = document.getElementById('ratingCount');
+      if (!badge) return;
+      badge.textContent = String(count);
+      badge.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+
+    function render(){
+      const tbody = document.getElementById('reviewsTbody');
+      const none = document.getElementById('noReviews');
+      const list = loadReviews();
+      const map = getProductsByName();
+
+      // filters
+      const txt = document.getElementById('filterText').value.trim().toLowerCase();
+      const fr = document.getElementById('filterRating').value;
+      const df = document.getElementById('filterFrom').value ? new Date(document.getElementById('filterFrom').value).getTime() : null;
+      const dt = document.getElementById('filterTo').value ? (new Date(document.getElementById('filterTo').value).getTime()+86400000-1) : null;
+
+      const filtered = list.filter(r=>{
+        const matchesTxt = !txt || (String(r.productName||'').toLowerCase().includes(txt) || String(r.comment||'').toLowerCase().includes(txt));
+        const matchesRating = !fr || String(r.rating)===String(fr);
+        const t = Number(r.ts)||0; const inFrom = !df || t>=df; const inTo = !dt || t<=dt;
+        return matchesTxt && matchesRating && inFrom && inTo;
+      });
+
+      // stats
+      document.getElementById('statTotal').textContent = String(list.length);
+      updateRatingBadge(list.length);
+      const avg = filtered.length ? (filtered.reduce((s,r)=>s+(Number(r.rating)||0),0)/filtered.length) : 0;
+      document.getElementById('statAvg').textContent = avg.toFixed(2);
+      document.getElementById('statAvgStars').innerHTML = starsHTML(Math.round(avg));
+      const lastTs = list.length ? Math.max.apply(null, list.map(r=>Number(r.ts)||0)) : null;
+      document.getElementById('statLast').textContent = lastTs ? fmtDate(lastTs) : '—';
+
+      if (!filtered.length){
+        tbody.innerHTML = '';
+        none.style.display = 'block';
+        return;
+      } else {
+        none.style.display = 'none';
+      }
+
+      const rows = filtered.sort((a,b)=> (b.ts||0)-(a.ts||0)).map(r=>{
+        const p = map.get(r.productName)||{};
+        const img = Array.isArray(p.images)&&p.images.length ? p.images[0] : '';
+        const imgHtml = img ? '<img src="'+escapeHtml(img)+'" alt="">' : '<div style="width:44px;height:44px;border-radius:6px;border:1px solid #eee;background:#f4f4f8"></div>';
+        return '<tr>'
+          + '<td class="muted">'+fmtDate(r.ts)+'</td>'
+          + '<td><div class="review-product">'+imgHtml+'<div><div>'+escapeHtml(r.productName||'')+'</div>' + (r.size?'<div class="muted">Size: '+escapeHtml(r.size)+'</div>':'') + '</div></div></td>'
+          + '<td>' + starsHTML(r.rating) + '</td>'
+          + '<td><span class="muted">'+escapeHtml(r.user||'')+'</span></td>'
+          + '<td>'+escapeHtml(r.comment||'')+'</td>'
+          + '<td style="text-align:center"><button class="button" data-del="'+escapeHtml(r.id)+'" title="Delete"><i class="fa fa-trash"></i></button></td>'
+          + '</tr>';
+      }).join('');
+      tbody.innerHTML = rows;
+    }
+
+    function addHandlers(){
+      document.getElementById('applyFilters').onclick = render;
+      document.getElementById('resetFilters').onclick = function(){
+        document.getElementById('filterText').value = '';
+        document.getElementById('filterRating').value = '';
+        document.getElementById('filterFrom').value = '';
+        document.getElementById('filterTo').value = '';
+        render();
+      };
+
+      document.getElementById('addReviewBtn').onclick = function(){
+        const productName = document.getElementById('newProduct').value.trim();
+        const rating = Number(document.getElementById('newRating').value||0);
+        const user = document.getElementById('newUser').value.trim();
+        const comment = document.getElementById('newComment').value.trim();
+        if (!productName || !rating || !comment){
+          alert('Please provide product name, rating, and comment.');
+          return;
+        }
+        const list = loadReviews();
+        list.push({ id: 'R'+Date.now()+Math.floor(Math.random()*1000), productName, rating, user, comment, ts: Date.now() });
+        saveReviews(list);
+        document.getElementById('newProduct').value = '';
+        document.getElementById('newRating').value = '';
+        document.getElementById('newUser').value = '';
+        document.getElementById('newComment').value = '';
+        render();
+      };
+
+      document.getElementById('exportCsv').onclick = function(){
+        const list = loadReviews();
+        if (!list.length) { alert('No reviews to export.'); return; }
+        const headers = ['id','date','product','rating','user','comment'];
+        const rows = list.map(r=> [r.id, new Date(r.ts||Date.now()).toISOString(), r.productName||'', r.rating||'', r.user||'', (r.comment||'').replace(/\n/g,' ') ]);
+        const csv = [headers.join(','), ...rows.map(a=> a.map(v=> '"'+String(v).replace(/"/g,'""')+'"').join(','))].join('\n');
+        const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href=url; a.download='reviews.csv'; a.click();
+        setTimeout(()=>URL.revokeObjectURL(url), 500);
+      };
+
+      document.getElementById('clearAll').onclick = function(){
+        if (!confirm('Clear all reviews?')) return;
+        localStorage.removeItem('reviews');
+        render();
+      };
+
+      document.getElementById('reviewsTbody').addEventListener('click', function(e){
+        const btn = e.target.closest('button[data-del]');
+        if (!btn) return;
+        const id = btn.getAttribute('data-del');
+        const list = loadReviews();
+        const next = list.filter(r=> r.id !== id);
+        saveReviews(next);
+        render();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      // If navigated from a product page and there's a selected product, prefill
+      try {
+        const sel = JSON.parse(sessionStorage.getItem('selectedProduct')||'null');
+        if (sel && sel.name) {
+          document.getElementById('newProduct').value = sel.name;
+        }
+      } catch(e){}
+      addHandlers();
+      render();
+    });
+  </script>
+</body>
+</html>
